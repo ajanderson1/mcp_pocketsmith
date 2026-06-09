@@ -56,9 +56,7 @@ async def retry_with_backoff(
             last_error = e
 
             if attempt == max_attempts:
-                logger.warning(
-                    f"All {max_attempts} attempts failed. Last error: {e}"
-                )
+                logger.warning(f"All {max_attempts} attempts failed. Last error: {e}")
                 break
 
             # Calculate delay with exponential backoff
@@ -69,8 +67,7 @@ async def retry_with_backoff(
             total_delay = delay + jitter
 
             logger.info(
-                f"Attempt {attempt}/{max_attempts} failed: {e}. "
-                f"Retrying in {total_delay:.2f}s"
+                f"Attempt {attempt}/{max_attempts} failed: {e}. Retrying in {total_delay:.2f}s"
             )
 
             if on_retry:

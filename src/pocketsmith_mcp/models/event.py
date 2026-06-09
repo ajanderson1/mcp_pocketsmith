@@ -27,9 +27,7 @@ class Event(BaseModel):
 
     # Amount information
     amount: float = Field(..., description="Event amount")
-    amount_in_base_currency: float | None = Field(
-        None, description="Amount in base currency"
-    )
+    amount_in_base_currency: float | None = Field(None, description="Amount in base currency")
     currency_code: str = Field(..., description="Currency code")
 
     # Schedule

@@ -36,7 +36,7 @@ def sample_institution():
         "title": "Chase Bank",
         "currency_code": "USD",
         "created_at": "2024-01-01T00:00:00Z",
-        "updated_at": "2024-01-01T00:00:00Z"
+        "updated_at": "2024-01-01T00:00:00Z",
     }
 
 
@@ -85,15 +85,11 @@ class TestCreateInstitution:
         client.post.return_value = sample_institution
 
         tool = mcp._tool_manager._tools.get("create_institution")
-        result = await tool.fn(
-            title="Chase Bank",
-            currency_code="USD"
-        )
+        result = await tool.fn(title="Chase Bank", currency_code="USD")
         result_data = json.loads(result)
 
         client.post.assert_called_once_with(
-            "/users/42/institutions",
-            json_data={"title": "Chase Bank", "currency_code": "USD"}
+            "/users/42/institutions", json_data={"title": "Chase Bank", "currency_code": "USD"}
         )
         assert result_data["title"] == "Chase Bank"
 
@@ -112,8 +108,7 @@ class TestUpdateInstitution:
         _result = await tool.fn(institution_id=500, title="Chase Bank USA")
 
         client.put.assert_called_once_with(
-            "/institutions/500",
-            json_data={"title": "Chase Bank USA"}
+            "/institutions/500", json_data={"title": "Chase Bank USA"}
         )
 
     @pytest.mark.asyncio

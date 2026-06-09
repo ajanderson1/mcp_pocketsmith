@@ -80,12 +80,7 @@ class TestBudgetingToolsIntegration:
     @pytest.mark.asyncio
     async def test_budget_tools_exist(self, server):
         """Test budgeting tools are properly registered."""
-        tools = [
-            "get_budget",
-            "get_budget_summary",
-            "get_trend_analysis",
-            "clear_forecast_cache"
-        ]
+        tools = ["get_budget", "get_budget_summary", "get_trend_analysis", "clear_forecast_cache"]
 
         for tool_name in tools:
             tool = server._tool_manager._tools.get(tool_name)
@@ -136,7 +131,7 @@ class TestToolErrorHandling:
             "get_current_user",
             "list_transactions",
             "create_transaction",
-            "list_categories"
+            "list_categories",
         ]
 
         for tool_name in critical_tools:

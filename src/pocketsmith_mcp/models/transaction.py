@@ -32,9 +32,7 @@ class Transaction(BaseModel):
 
     # Amount information
     amount: float = Field(..., description="Transaction amount")
-    amount_in_base_currency: float | None = Field(
-        None, description="Amount in base currency"
-    )
+    amount_in_base_currency: float | None = Field(None, description="Amount in base currency")
     type: TransactionType = Field(..., description="Debit or credit")
     closing_balance: float | None = Field(None, description="Balance after transaction")
 
@@ -47,15 +45,11 @@ class Transaction(BaseModel):
     # Status
     is_transfer: bool = Field(False, description="Is this a transfer")
     needs_review: bool = Field(False, description="Needs manual review")
-    status: TransactionStatus = Field(
-        TransactionStatus.POSTED, description="Transaction status"
-    )
+    status: TransactionStatus = Field(TransactionStatus.POSTED, description="Transaction status")
 
     # Related entities
     category: dict[str, Any] | None = Field(None, description="Transaction category")
-    transaction_account: dict[str, Any] | None = Field(
-        None, description="Transaction account"
-    )
+    transaction_account: dict[str, Any] | None = Field(None, description="Transaction account")
 
     # Timestamps
     created_at: datetime | None = Field(None, description="Creation timestamp")

@@ -38,7 +38,7 @@ def sample_event():
         "date": "2024-01-15",
         "repeat_type": "monthly",
         "repeat_interval": 1,
-        "note": "Monthly subscription"
+        "note": "Monthly subscription",
     }
 
 
@@ -65,14 +65,10 @@ class TestListEvents:
         client.get.return_value = [sample_event]
 
         tool = mcp._tool_manager._tools.get("list_events")
-        await tool.fn(
-            start_date="2024-01-01",
-            end_date="2024-12-31"
-        )
+        await tool.fn(start_date="2024-01-01", end_date="2024-12-31")
 
         client.get.assert_called_once_with(
-            "/users/42/events",
-            params={"start_date": "2024-01-01", "end_date": "2024-12-31"}
+            "/users/42/events", params={"start_date": "2024-01-01", "end_date": "2024-12-31"}
         )
 
 
@@ -103,12 +99,7 @@ class TestCreateEvent:
         client.post.return_value = sample_event
 
         tool = mcp._tool_manager._tools.get("create_event")
-        _result = await tool.fn(
-            scenario_id=200,
-            category_id=100,
-            amount=-50.00,
-            date="2024-01-15"
-        )
+        _result = await tool.fn(scenario_id=200, category_id=100, amount=-50.00, date="2024-01-15")
 
         client.post.assert_called_once_with(
             "/scenarios/200/events",
@@ -117,8 +108,8 @@ class TestCreateEvent:
                 "amount": -50.00,
                 "date": "2024-01-15",
                 "repeat_type": "once",
-                "repeat_interval": 1
-            }
+                "repeat_interval": 1,
+            },
         )
 
     @pytest.mark.asyncio
@@ -135,7 +126,7 @@ class TestCreateEvent:
             date="2024-01-15",
             repeat_type="monthly",
             repeat_interval=1,
-            note="Monthly subscription"
+            note="Monthly subscription",
         )
 
         call_args = client.post.call_args[1]["json_data"]
@@ -156,10 +147,7 @@ class TestUpdateEvent:
         tool = mcp._tool_manager._tools.get("update_event")
         await tool.fn(event_id=600, amount=-75.00)
 
-        client.put.assert_called_once_with(
-            "/events/600",
-            json_data={"amount": -75.00}
-        )
+        client.put.assert_called_once_with("/events/600", json_data={"amount": -75.00})
 
     @pytest.mark.asyncio
     async def test_update_event_no_fields(self, mcp_with_tools):

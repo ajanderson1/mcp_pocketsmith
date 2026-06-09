@@ -54,9 +54,7 @@ class Config:
 
         # Validate API key format (basic check)
         if len(api_key) < 10:
-            raise ConfigurationError(
-                "POCKETSMITH_API_KEY appears to be invalid (too short)"
-            )
+            raise ConfigurationError("POCKETSMITH_API_KEY appears to be invalid (too short)")
 
         return cls(
             api_key=api_key,

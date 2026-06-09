@@ -13,7 +13,9 @@ from pocketsmith_mcp.user_context import UserContext
 logger = get_logger("tools.transaction_accounts")
 
 
-def register_transaction_account_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx: UserContext) -> None:
+def register_transaction_account_tools(
+    mcp: FastMCP, client: PocketSmithClient, user_ctx: UserContext
+) -> None:
     """Register transaction account-related MCP tools."""
 
     @mcp.tool()
@@ -107,8 +109,7 @@ def register_transaction_account_tools(mcp: FastMCP, client: PocketSmithClient, 
                 raise ValueError("At least one field must be provided for update")
 
             result = await client.put(
-                f"/transaction_accounts/{transaction_account_id}",
-                json_data=body
+                f"/transaction_accounts/{transaction_account_id}", json_data=body
             )
             return json.dumps(result, indent=2)
         except Exception as e:

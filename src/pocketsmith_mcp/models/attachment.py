@@ -28,9 +28,7 @@ class Attachment(BaseModel):
     file_name: str = Field(..., description="Original file name")
     type: str | None = Field(None, description="Attachment type")
     content_type: str = Field(..., description="MIME content type")
-    content_type_meta: ContentTypeMeta | None = Field(
-        None, description="Content type metadata"
-    )
+    content_type_meta: ContentTypeMeta | None = Field(None, description="Content type metadata")
     original_url: str | None = Field(None, description="Original file URL")
     variants: AttachmentVariants | None = Field(None, description="Image variants")
 

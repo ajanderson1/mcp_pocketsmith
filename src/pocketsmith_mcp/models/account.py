@@ -36,9 +36,7 @@ class TransactionAccount(BaseModel):
     current_balance_in_base_currency: float = Field(
         0.0, description="Current balance in base currency"
     )
-    current_balance_exchange_rate: float | None = Field(
-        None, description="Exchange rate used"
-    )
+    current_balance_exchange_rate: float | None = Field(None, description="Exchange rate used")
     safe_balance: float | None = Field(None, description="Safe balance")
     safe_balance_in_base_currency: float | None = Field(
         None, description="Safe balance in base currency"
@@ -90,9 +88,7 @@ class Scenario(BaseModel):
     current_balance_in_base_currency: float | None = Field(
         None, description="Current balance in base currency"
     )
-    current_balance_exchange_rate: float | None = Field(
-        None, description="Exchange rate"
-    )
+    current_balance_exchange_rate: float | None = Field(None, description="Exchange rate")
     safe_balance: float | None = Field(None, description="Safe balance")
     safe_balance_in_base_currency: float | None = Field(
         None, description="Safe balance in base currency"
@@ -119,9 +115,7 @@ class Account(BaseModel):
     current_balance_in_base_currency: float = Field(
         0.0, description="Current balance in base currency"
     )
-    current_balance_exchange_rate: float | None = Field(
-        None, description="Exchange rate used"
-    )
+    current_balance_exchange_rate: float | None = Field(None, description="Exchange rate used")
     safe_balance: float | None = Field(None, description="Safe balance")
     safe_balance_in_base_currency: float | None = Field(
         None, description="Safe balance in base currency"

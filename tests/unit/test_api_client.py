@@ -191,11 +191,14 @@ class TestPocketSmithClient:
             mock_client_class.return_value = mock_client
 
             client = PocketSmithClient(api_key="test_key")
-            await client.get("/users/1/transactions", params={
-                "page": 1,
-                "start_date": None,
-                "end_date": "2024-01-31",
-            })
+            await client.get(
+                "/users/1/transactions",
+                params={
+                    "page": 1,
+                    "start_date": None,
+                    "end_date": "2024-01-31",
+                },
+            )
 
             # Check that None values were filtered out
             call_args = mock_client.request.call_args

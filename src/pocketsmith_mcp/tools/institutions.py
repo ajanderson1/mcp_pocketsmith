@@ -12,7 +12,9 @@ from pocketsmith_mcp.user_context import UserContext
 logger = get_logger("tools.institutions")
 
 
-def register_institution_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx: UserContext) -> None:
+def register_institution_tools(
+    mcp: FastMCP, client: PocketSmithClient, user_ctx: UserContext
+) -> None:
     """Register institution-related MCP tools."""
 
     @mcp.tool()
@@ -133,11 +135,13 @@ def register_institution_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx
         try:
             validate_id(institution_id, "institution_id")
             await client.delete(f"/institutions/{institution_id}")
-            return json.dumps({
-                "deleted": True,
-                "institution_id": institution_id,
-                "message": "Institution deleted. Associated accounts are preserved."
-            })
+            return json.dumps(
+                {
+                    "deleted": True,
+                    "institution_id": institution_id,
+                    "message": "Institution deleted. Associated accounts are preserved.",
+                }
+            )
         except Exception as e:
             logger.error(f"delete_institution failed: {e}")
             raise ValueError(f"Failed to delete institution {institution_id}: {e}")

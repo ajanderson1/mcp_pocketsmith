@@ -37,7 +37,7 @@ def sample_attachment():
         "title": "Receipt",
         "file_name": "receipt.pdf",
         "content_type": "application/pdf",
-        "original_url": "https://example.com/receipt.pdf"
+        "original_url": "https://example.com/receipt.pdf",
     }
 
 
@@ -66,10 +66,7 @@ class TestListAttachments:
         tool = mcp._tool_manager._tools.get("list_attachments")
         await tool.fn(unassigned=True)
 
-        client.get.assert_called_once_with(
-            "/users/42/attachments",
-            params={"unassigned": 1}
-        )
+        client.get.assert_called_once_with("/users/42/attachments", params={"unassigned": 1})
 
 
 class TestGetAttachment:
@@ -100,19 +97,11 @@ class TestCreateAttachment:
 
         valid_b64 = base64.b64encode(b"receipt content").decode()
         tool = mcp._tool_manager._tools.get("create_attachment")
-        _result = await tool.fn(
-            title="Receipt",
-            file_name="receipt.pdf",
-            file_data=valid_b64
-        )
+        _result = await tool.fn(title="Receipt", file_name="receipt.pdf", file_data=valid_b64)
 
         client.post.assert_called_once_with(
             "/users/42/attachments",
-            json_data={
-                "title": "Receipt",
-                "file_name": "receipt.pdf",
-                "file_data": valid_b64
-            }
+            json_data={"title": "Receipt", "file_name": "receipt.pdf", "file_data": valid_b64},
         )
 
 
@@ -130,8 +119,7 @@ class TestUpdateAttachment:
         await tool.fn(attachment_id=700, title="Updated Receipt")
 
         client.put.assert_called_once_with(
-            "/attachments/700",
-            json_data={"title": "Updated Receipt"}
+            "/attachments/700", json_data={"title": "Updated Receipt"}
         )
 
     @pytest.mark.asyncio

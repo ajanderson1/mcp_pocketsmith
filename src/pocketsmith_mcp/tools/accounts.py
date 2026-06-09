@@ -114,11 +114,13 @@ def register_account_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx: Us
         try:
             validate_id(account_id, "account_id")
             await client.delete(f"/accounts/{account_id}")
-            return json.dumps({
-                "deleted": True,
-                "account_id": account_id,
-                "message": "Account permanently deleted"
-            })
+            return json.dumps(
+                {
+                    "deleted": True,
+                    "account_id": account_id,
+                    "message": "Account permanently deleted",
+                }
+            )
         except Exception as e:
             logger.error(f"delete_account failed: {e}")
             raise ValueError(f"Failed to delete account {account_id}: {e}")

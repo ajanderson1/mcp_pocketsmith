@@ -27,18 +27,18 @@ def register_all_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx: UserCo
         client: PocketSmith API client
         user_ctx: User context with auto-resolved user ID
     """
-    register_user_tools(mcp, client, user_ctx)           # 3 tools
-    register_account_tools(mcp, client, user_ctx)         # 4 tools
+    register_user_tools(mcp, client, user_ctx)  # 3 tools
+    register_account_tools(mcp, client, user_ctx)  # 4 tools
     register_transaction_account_tools(mcp, client, user_ctx)  # 3 tools
-    register_transaction_tools(mcp, client, user_ctx)     # 5 tools
-    register_category_tools(mcp, client, user_ctx)        # 5 tools
-    register_budgeting_tools(mcp, client, user_ctx)       # 4 tools
-    register_institution_tools(mcp, client, user_ctx)     # 5 tools
-    register_event_tools(mcp, client, user_ctx)           # 5 tools
-    register_attachment_tools(mcp, client, user_ctx)      # 5 tools
-    register_label_tools(mcp, client, user_ctx)           # 2 tools
-    register_utility_tools(mcp, client)                   # 2 tools (no user_id needed)
-    register_bulk_transaction_tools(mcp, client)          # 1 tool
+    register_transaction_tools(mcp, client, user_ctx)  # 5 tools
+    register_category_tools(mcp, client, user_ctx)  # 5 tools
+    register_budgeting_tools(mcp, client, user_ctx)  # 4 tools
+    register_institution_tools(mcp, client, user_ctx)  # 5 tools
+    register_event_tools(mcp, client, user_ctx)  # 5 tools
+    register_attachment_tools(mcp, client, user_ctx)  # 5 tools
+    register_label_tools(mcp, client, user_ctx)  # 2 tools
+    register_utility_tools(mcp, client)  # 2 tools (no user_id needed)
+    register_bulk_transaction_tools(mcp, client)  # 1 tool
 
 
 __all__ = ["register_all_tools"]

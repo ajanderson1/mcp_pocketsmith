@@ -76,7 +76,7 @@ class TestListSavedSearches:
         mcp, client = mcp_with_tools
         saved_searches = [
             {"id": 1, "title": "Recent purchases", "query": "date:last_month"},
-            {"id": 2, "title": "Large expenses", "query": "amount:>100"}
+            {"id": 2, "title": "Large expenses", "query": "amount:>100"},
         ]
         client.get.return_value = saved_searches
 

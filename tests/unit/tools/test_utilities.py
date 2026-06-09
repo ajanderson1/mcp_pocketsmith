@@ -35,7 +35,7 @@ class TestListCurrencies:
         currencies = [
             {"id": "USD", "name": "US Dollar", "symbol": "$", "decimal_places": 2},
             {"id": "EUR", "name": "Euro", "symbol": "€", "decimal_places": 2},
-            {"id": "NZD", "name": "New Zealand Dollar", "symbol": "$", "decimal_places": 2}
+            {"id": "NZD", "name": "New Zealand Dollar", "symbol": "$", "decimal_places": 2},
         ]
         client.get.return_value = currencies
 
@@ -71,14 +71,14 @@ class TestListTimeZones:
                 "id": "Pacific/Auckland",
                 "name": "Auckland",
                 "formatted_offset": "+13:00",
-                "offset_minutes": 780
+                "offset_minutes": 780,
             },
             {
                 "id": "America/New_York",
                 "name": "Eastern Time (US & Canada)",
                 "formatted_offset": "-05:00",
-                "offset_minutes": -300
-            }
+                "offset_minutes": -300,
+            },
         ]
         client.get.return_value = time_zones
 

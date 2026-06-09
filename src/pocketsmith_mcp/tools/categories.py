@@ -175,11 +175,13 @@ def register_category_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx: U
         try:
             validate_id(category_id, "category_id")
             await client.delete(f"/categories/{category_id}")
-            return json.dumps({
-                "deleted": True,
-                "category_id": category_id,
-                "message": "Category deleted. Transactions are now uncategorised."
-            })
+            return json.dumps(
+                {
+                    "deleted": True,
+                    "category_id": category_id,
+                    "message": "Category deleted. Transactions are now uncategorised.",
+                }
+            )
         except Exception as e:
             logger.error(f"delete_category failed: {e}")
             raise ValueError(f"Failed to delete category {category_id}: {e}")

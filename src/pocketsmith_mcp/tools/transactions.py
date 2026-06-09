@@ -13,7 +13,9 @@ from pocketsmith_mcp.user_context import UserContext
 logger = get_logger("tools.transactions")
 
 
-def register_transaction_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx: UserContext) -> None:
+def register_transaction_tools(
+    mcp: FastMCP, client: PocketSmithClient, user_ctx: UserContext
+) -> None:
     """Register transaction-related MCP tools."""
 
     @mcp.tool()
@@ -235,11 +237,13 @@ def register_transaction_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx
         try:
             validate_id(transaction_id, "transaction_id")
             await client.delete(f"/transactions/{transaction_id}")
-            return json.dumps({
-                "deleted": True,
-                "transaction_id": transaction_id,
-                "message": "Transaction permanently deleted"
-            })
+            return json.dumps(
+                {
+                    "deleted": True,
+                    "transaction_id": transaction_id,
+                    "message": "Transaction permanently deleted",
+                }
+            )
         except Exception as e:
             logger.error(f"delete_transaction failed: {e}")
             raise ValueError(f"Failed to delete transaction {transaction_id}: {e}")

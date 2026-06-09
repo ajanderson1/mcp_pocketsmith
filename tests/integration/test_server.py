@@ -146,7 +146,9 @@ class TestServerConfiguration:
     def test_custom_timeout(self):
         """Test server respects custom timeout."""
         with patch("pocketsmith_mcp.server.get_config") as mock_config:
-            mock_config.return_value = _mock_config(api_timeout=60.0, max_retries=5, rate_limit_per_minute=120)
+            mock_config.return_value = _mock_config(
+                api_timeout=60.0, max_retries=5, rate_limit_per_minute=120
+            )
 
             server = create_server()
             assert server is not None

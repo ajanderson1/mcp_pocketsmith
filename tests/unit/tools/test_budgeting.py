@@ -33,21 +33,14 @@ class TestGetBudget:
     async def test_get_budget_basic(self, mcp_with_tools):
         """Test basic budget retrieval."""
         mcp, client = mcp_with_tools
-        budget_data = {
-            "forecast_cache_age": 3600,
-            "income": 5000.00,
-            "expense": -3500.00
-        }
+        budget_data = {"forecast_cache_age": 3600, "income": 5000.00, "expense": -3500.00}
         client.get.return_value = budget_data
 
         tool = mcp._tool_manager._tools.get("get_budget")
         result = await tool.fn()
         result_data = json.loads(result)
 
-        client.get.assert_called_once_with(
-            "/users/42/budget",
-            params={"roll_up": 0}
-        )
+        client.get.assert_called_once_with("/users/42/budget", params={"roll_up": 0})
         assert result_data["income"] == 5000.00
 
     @pytest.mark.asyncio
@@ -59,10 +52,7 @@ class TestGetBudget:
         tool = mcp._tool_manager._tools.get("get_budget")
         await tool.fn(roll_up=True)
 
-        client.get.assert_called_once_with(
-            "/users/42/budget",
-            params={"roll_up": 1}
-        )
+        client.get.assert_called_once_with("/users/42/budget", params={"roll_up": 1})
 
 
 class TestGetBudgetSummary:
@@ -72,19 +62,12 @@ class TestGetBudgetSummary:
     async def test_get_budget_summary_basic(self, mcp_with_tools):
         """Test basic budget summary retrieval."""
         mcp, client = mcp_with_tools
-        summary_data = {
-            "total_income": 5000.00,
-            "total_expense": -3500.00,
-            "categories": []
-        }
+        summary_data = {"total_income": 5000.00, "total_expense": -3500.00, "categories": []}
         client.get.return_value = summary_data
 
         tool = mcp._tool_manager._tools.get("get_budget_summary")
         result = await tool.fn(
-            start_date="2024-01-01",
-            end_date="2024-01-31",
-            period="months",
-            interval=1
+            start_date="2024-01-01", end_date="2024-01-31", period="months", interval=1
         )
         result_data = json.loads(result)
 
@@ -98,18 +81,12 @@ class TestGetTrendAnalysis:
     async def test_get_trend_analysis_basic(self, mcp_with_tools):
         """Test basic trend analysis retrieval."""
         mcp, client = mcp_with_tools
-        trend_data = {
-            "periods": [],
-            "categories": []
-        }
+        trend_data = {"periods": [], "categories": []}
         client.get.return_value = trend_data
 
         tool = mcp._tool_manager._tools.get("get_trend_analysis")
         result = await tool.fn(
-            period="months",
-            interval=1,
-            start_date="2024-01-01",
-            end_date="2024-12-31"
+            period="months", interval=1, start_date="2024-01-01", end_date="2024-12-31"
         )
         result_data = json.loads(result)
 

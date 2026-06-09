@@ -11,7 +11,9 @@ from pocketsmith_mcp.user_context import UserContext
 logger = get_logger("tools.budgeting")
 
 
-def register_budgeting_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx: UserContext) -> None:
+def register_budgeting_tools(
+    mcp: FastMCP, client: PocketSmithClient, user_ctx: UserContext
+) -> None:
     """Register budgeting-related MCP tools."""
 
     @mcp.tool()
@@ -152,10 +154,14 @@ def register_budgeting_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx: 
         """
         try:
             await client.delete(f"/users/{user_ctx.user_id}/forecast_cache")
-            return json.dumps({
-                "success": True,
-                "message": "Forecast cache cleared. Forecast will be recalculated on next access."
-            })
+            return json.dumps(
+                {
+                    "success": True,
+                    "message": (
+                        "Forecast cache cleared. Forecast will be recalculated on next access."
+                    ),
+                }
+            )
         except Exception as e:
             logger.error(f"clear_forecast_cache failed: {e}")
             raise ValueError(f"Failed to clear forecast cache: {e}")

@@ -41,10 +41,7 @@ class TestListTransactions:
         result = await tool.fn()
         result_data = json.loads(result)
 
-        client.get.assert_called_once_with(
-            "/users/42/transactions",
-            params={"page": 1}
-        )
+        client.get.assert_called_once_with("/users/42/transactions", params={"page": 1})
         assert len(result_data) == 1
         assert result_data[0]["id"] == sample_transaction["id"]
 
@@ -55,18 +52,11 @@ class TestListTransactions:
         client.get.return_value = [sample_transaction]
 
         tool = mcp._tool_manager._tools.get("list_transactions")
-        _result = await tool.fn(
-            start_date="2024-01-01",
-            end_date="2024-01-31"
-        )
+        _result = await tool.fn(start_date="2024-01-01", end_date="2024-01-31")
 
         client.get.assert_called_once_with(
             "/users/42/transactions",
-            params={
-                "page": 1,
-                "start_date": "2024-01-01",
-                "end_date": "2024-01-31"
-            }
+            params={"page": 1, "start_date": "2024-01-01", "end_date": "2024-01-31"},
         )
 
     @pytest.mark.asyncio
@@ -79,8 +69,7 @@ class TestListTransactions:
         await tool.fn(search="coffee")
 
         client.get.assert_called_once_with(
-            "/users/42/transactions",
-            params={"page": 1, "search": "coffee"}
+            "/users/42/transactions", params={"page": 1, "search": "coffee"}
         )
 
     @pytest.mark.asyncio
@@ -93,8 +82,7 @@ class TestListTransactions:
         await tool.fn(uncategorised=True)
 
         client.get.assert_called_once_with(
-            "/users/42/transactions",
-            params={"page": 1, "uncategorised": 1}
+            "/users/42/transactions", params={"page": 1, "uncategorised": 1}
         )
 
     @pytest.mark.asyncio
@@ -107,8 +95,7 @@ class TestListTransactions:
         await tool.fn(needs_review=True)
 
         client.get.assert_called_once_with(
-            "/users/42/transactions",
-            params={"page": 1, "needs_review": 1}
+            "/users/42/transactions", params={"page": 1, "needs_review": 1}
         )
 
 
@@ -141,10 +128,7 @@ class TestCreateTransaction:
 
         tool = mcp._tool_manager._tools.get("create_transaction")
         result = await tool.fn(
-            transaction_account_id=789,
-            payee="Starbucks",
-            amount=-5.50,
-            date="2024-01-15"
+            transaction_account_id=789, payee="Starbucks", amount=-5.50, date="2024-01-15"
         )
         _result_data = json.loads(result)
 
@@ -155,8 +139,8 @@ class TestCreateTransaction:
                 "amount": -5.50,
                 "date": "2024-01-15",
                 "is_transfer": False,
-                "needs_review": False
-            }
+                "needs_review": False,
+            },
         )
 
     @pytest.mark.asyncio
@@ -171,7 +155,7 @@ class TestCreateTransaction:
             payee="Starbucks",
             amount=-5.50,
             date="2024-01-15",
-            category_id=100
+            category_id=100,
         )
 
         client.post.assert_called_once()
@@ -190,7 +174,7 @@ class TestCreateTransaction:
             payee="Starbucks",
             amount=-5.50,
             date="2024-01-15",
-            labels=["coffee", "work"]
+            labels=["coffee", "work"],
         )
 
         client.post.assert_called_once()
@@ -212,10 +196,7 @@ class TestUpdateTransaction:
         result = await tool.fn(transaction_id=456, payee="New Payee")
         result_data = json.loads(result)
 
-        client.put.assert_called_once_with(
-            "/transactions/456",
-            json_data={"payee": "New Payee"}
-        )
+        client.put.assert_called_once_with("/transactions/456", json_data={"payee": "New Payee"})
         assert result_data["payee"] == "New Payee"
 
     @pytest.mark.asyncio
@@ -227,10 +208,7 @@ class TestUpdateTransaction:
         tool = mcp._tool_manager._tools.get("update_transaction")
         await tool.fn(transaction_id=456, category_id=200)
 
-        client.put.assert_called_once_with(
-            "/transactions/456",
-            json_data={"category_id": 200}
-        )
+        client.put.assert_called_once_with("/transactions/456", json_data={"category_id": 200})
 
 
 class TestDeleteTransaction:

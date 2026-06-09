@@ -190,11 +190,7 @@ def register_event_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx: User
         try:
             validate_id(event_id, "event_id")
             await client.delete(f"/events/{event_id}")
-            return json.dumps({
-                "deleted": True,
-                "event_id": event_id,
-                "message": "Event deleted"
-            })
+            return json.dumps({"deleted": True, "event_id": event_id, "message": "Event deleted"})
         except Exception as e:
             logger.error(f"delete_event failed: {e}")
             raise ValueError(f"Failed to delete event {event_id}: {e}")

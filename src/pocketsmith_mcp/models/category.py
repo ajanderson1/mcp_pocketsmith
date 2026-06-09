@@ -67,9 +67,7 @@ class CategoryUpdate(BaseModel):
     is_transfer: bool | None = Field(None, description="Is this a transfer category")
     is_bill: bool | None = Field(None, description="Is this a bill category")
     roll_up: bool | None = Field(None, description="Roll up to parent in reports")
-    refund_behaviour: RefundBehaviour | None = Field(
-        None, description="How refunds are handled"
-    )
+    refund_behaviour: RefundBehaviour | None = Field(None, description="How refunds are handled")
 
 
 class CategoryRule(BaseModel):

@@ -88,10 +88,7 @@ class TestUpdateAccount:
         result = await tool.fn(account_id=456, title="New Account Name")
         result_data = json.loads(result)
 
-        client.put.assert_called_once_with(
-            "/accounts/456",
-            json_data={"title": "New Account Name"}
-        )
+        client.put.assert_called_once_with("/accounts/456", json_data={"title": "New Account Name"})
         assert result_data["title"] == "New Account Name"
 
     @pytest.mark.asyncio

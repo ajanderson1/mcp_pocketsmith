@@ -55,31 +55,41 @@ def register_bulk_transaction_tools(mcp: FastMCP, client: PocketSmithClient) -> 
             raw_id = update.get("transaction_id")
             if not raw_id and raw_id != 0:
                 skipped += 1
-                results.append({
-                    "transaction_id": None,
-                    "status": "skipped",
-                    "message": "Missing transaction_id",
-                })
+                results.append(
+                    {
+                        "transaction_id": None,
+                        "status": "skipped",
+                        "message": "Missing transaction_id",
+                    }
+                )
                 continue
 
             try:
                 transaction_id = int(raw_id)
             except (ValueError, TypeError):
                 skipped += 1
-                results.append({
-                    "transaction_id": raw_id,
-                    "status": "skipped",
-                    "message": f"Invalid transaction_id: must be a numeric value, got {raw_id!r}",
-                })
+                results.append(
+                    {
+                        "transaction_id": raw_id,
+                        "status": "skipped",
+                        "message": (
+                            f"Invalid transaction_id: must be a numeric value, got {raw_id!r}"
+                        ),
+                    }
+                )
                 continue
 
             if transaction_id <= 0:
                 skipped += 1
-                results.append({
-                    "transaction_id": transaction_id,
-                    "status": "skipped",
-                    "message": f"transaction_id must be a positive integer, got {transaction_id}",
-                })
+                results.append(
+                    {
+                        "transaction_id": transaction_id,
+                        "status": "skipped",
+                        "message": (
+                            f"transaction_id must be a positive integer, got {transaction_id}"
+                        ),
+                    }
+                )
                 continue
 
             try:
@@ -95,58 +105,71 @@ def register_bulk_transaction_tools(mcp: FastMCP, client: PocketSmithClient) -> 
 
                 if not body:
                     skipped += 1
-                    results.append({
-                        "transaction_id": transaction_id,
-                        "status": "skipped",
-                        "message": "No fields to update",
-                    })
+                    results.append(
+                        {
+                            "transaction_id": transaction_id,
+                            "status": "skipped",
+                            "message": "No fields to update",
+                        }
+                    )
                     continue
 
                 if dry_run:
                     successful += 1
-                    results.append({
-                        "transaction_id": transaction_id,
-                        "status": "would_update",
-                        "planned_changes": body,
-                    })
+                    results.append(
+                        {
+                            "transaction_id": transaction_id,
+                            "status": "would_update",
+                            "planned_changes": body,
+                        }
+                    )
                 else:
                     updated = await client.put(
                         f"/transactions/{transaction_id}",
                         json_data=body,
                     )
                     successful += 1
-                    results.append({
-                        "transaction_id": transaction_id,
-                        "status": "success",
-                        "updated": {
-                            "id": updated.get("id"),
-                            "payee": updated.get("payee"),
-                            "amount": updated.get("amount"),
-                            "date": updated.get("date"),
-                            "category": updated.get("category", {}).get("title") if updated.get("category") else None,
-                            "is_transfer": updated.get("is_transfer"),
-                        },
-                    })
+                    results.append(
+                        {
+                            "transaction_id": transaction_id,
+                            "status": "success",
+                            "updated": {
+                                "id": updated.get("id"),
+                                "payee": updated.get("payee"),
+                                "amount": updated.get("amount"),
+                                "date": updated.get("date"),
+                                "category": updated.get("category", {}).get("title")
+                                if updated.get("category")
+                                else None,
+                                "is_transfer": updated.get("is_transfer"),
+                            },
+                        }
+                    )
 
             except Exception as e:
                 failed += 1
                 error_msg = f"Transaction {transaction_id}: {e}"
                 errors.append(error_msg)
                 logger.error(f"bulk_update_transactions failed for {transaction_id}: {e}")
-                results.append({
-                    "transaction_id": transaction_id,
-                    "status": "error",
-                    "message": str(e),
-                })
+                results.append(
+                    {
+                        "transaction_id": transaction_id,
+                        "status": "error",
+                        "message": str(e),
+                    }
+                )
 
-        return json.dumps({
-            "dry_run": dry_run,
-            "summary": {
-                "total": len(updates),
-                "successful": successful,
-                "failed": failed,
-                "skipped": skipped,
-                "errors": errors,
+        return json.dumps(
+            {
+                "dry_run": dry_run,
+                "summary": {
+                    "total": len(updates),
+                    "successful": successful,
+                    "failed": failed,
+                    "skipped": skipped,
+                    "errors": errors,
+                },
+                "results": results,
             },
-            "results": results,
-        }, indent=2)
+            indent=2,
+        )

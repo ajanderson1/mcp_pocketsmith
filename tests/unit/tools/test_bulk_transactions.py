@@ -133,7 +133,14 @@ class TestBulkUpdateTransactions:
         """Test that one failure doesn't stop other updates."""
         mcp, client = mcp_with_tools
         client.put.side_effect = [
-            {"id": 1, "payee": "A", "amount": -5, "date": "2024-01-01", "category": None, "is_transfer": False},
+            {
+                "id": 1,
+                "payee": "A",
+                "amount": -5,
+                "date": "2024-01-01",
+                "category": None,
+                "is_transfer": False,
+            },
             Exception("API Error"),
         ]
 
@@ -157,11 +164,13 @@ class TestBulkUpdateTransactions:
 
         tool = mcp._tool_manager._tools.get("bulk_update_transactions")
         result = await tool.fn(
-            updates=[{
-                "transaction_id": 1,
-                "is_transfer": True,
-                "needs_review": False,
-            }],
+            updates=[
+                {
+                    "transaction_id": 1,
+                    "is_transfer": True,
+                    "needs_review": False,
+                }
+            ],
             dry_run=True,
         )
         data = json.loads(result)

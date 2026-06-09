@@ -36,20 +36,14 @@ class User(BaseModel):
     available_budgets: int = Field(0, description="Number of budgets available")
 
     # Forecast settings
-    forecast_last_updated_at: datetime | None = Field(
-        None, description="Last forecast update time"
-    )
+    forecast_last_updated_at: datetime | None = Field(None, description="Last forecast update time")
     forecast_last_accessed_at: datetime | None = Field(
         None, description="Last forecast access time"
     )
     forecast_start_date: str | None = Field(None, description="Forecast start date")
     forecast_end_date: str | None = Field(None, description="Forecast end date")
-    forecast_defer_recalculate: bool = Field(
-        False, description="Defer forecast recalculation"
-    )
-    forecast_needs_recalculate: bool = Field(
-        False, description="Forecast needs recalculation"
-    )
+    forecast_defer_recalculate: bool = Field(False, description="Defer forecast recalculation")
+    forecast_needs_recalculate: bool = Field(False, description="Forecast needs recalculation")
 
     # Activity tracking
     last_logged_in_at: datetime | None = Field(None, description="Last login time")
@@ -68,6 +62,4 @@ class UserUpdate(BaseModel):
     time_zone: str | None = Field(None, description="Time zone")
     week_start_day: int | None = Field(None, description="Week start day")
     base_currency_code: str | None = Field(None, description="Base currency code")
-    always_show_base_currency: bool | None = Field(
-        None, description="Always show base currency"
-    )
+    always_show_base_currency: bool | None = Field(None, description="Always show base currency")

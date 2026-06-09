@@ -36,7 +36,7 @@ def sample_transaction_account():
         "type": "bank",
         "currency_code": "USD",
         "starting_balance": 1000.00,
-        "current_balance": 5000.00
+        "current_balance": 5000.00,
     }
 
 
@@ -49,11 +49,9 @@ class TestListTransactionAccounts:
     ):
         """Test successful transaction account listing."""
         mcp, client = mcp_with_tools
-        accounts_response = [{
-            "id": 1,
-            "title": "Savings",
-            "transaction_accounts": [sample_transaction_account]
-        }]
+        accounts_response = [
+            {"id": 1, "title": "Savings", "transaction_accounts": [sample_transaction_account]}
+        ]
         client.get.return_value = accounts_response
 
         tool = mcp._tool_manager._tools.get("list_transaction_accounts")
@@ -111,8 +109,7 @@ class TestUpdateTransactionAccount:
         _result = await tool.fn(transaction_account_id=800, name="Primary Checking")
 
         client.put.assert_called_once_with(
-            "/transaction_accounts/800",
-            json_data={"name": "Primary Checking"}
+            "/transaction_accounts/800", json_data={"name": "Primary Checking"}
         )
 
     @pytest.mark.asyncio
@@ -128,8 +125,7 @@ class TestUpdateTransactionAccount:
         await tool.fn(transaction_account_id=800, starting_balance=2000.00)
 
         client.put.assert_called_once_with(
-            "/transaction_accounts/800",
-            json_data={"starting_balance": 2000.00}
+            "/transaction_accounts/800", json_data={"starting_balance": 2000.00}
         )
 
     @pytest.mark.asyncio

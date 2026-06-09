@@ -83,8 +83,8 @@ class TestCreateCategory:
                 "title": "Food & Dining",
                 "is_transfer": False,
                 "is_bill": False,
-                "roll_up": False
-            }
+                "roll_up": False,
+            },
         )
         assert result_data["title"] == sample_category["title"]
 
@@ -128,8 +128,7 @@ class TestUpdateCategory:
         _result_data = json.loads(result)
 
         client.put.assert_called_once_with(
-            "/categories/100",
-            json_data={"title": "New Category Name"}
+            "/categories/100", json_data={"title": "New Category Name"}
         )
 
     @pytest.mark.asyncio

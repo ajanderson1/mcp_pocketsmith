@@ -100,10 +100,7 @@ class TestUpdateUser:
         result = await tool.fn(name="New Name")
         result_data = json.loads(result)
 
-        client.put.assert_called_once_with(
-            "/users/42",
-            json_data={"name": "New Name"}
-        )
+        client.put.assert_called_once_with("/users/42", json_data={"name": "New Name"})
         assert result_data["name"] == "New Name"
 
     @pytest.mark.asyncio
@@ -117,33 +114,22 @@ class TestUpdateUser:
         result = await tool.fn(email="new@example.com")
         result_data = json.loads(result)
 
-        client.put.assert_called_once_with(
-            "/users/42",
-            json_data={"email": "new@example.com"}
-        )
+        client.put.assert_called_once_with("/users/42", json_data={"email": "new@example.com"})
         assert result_data["email"] == "new@example.com"
 
     @pytest.mark.asyncio
     async def test_update_user_multiple_fields(self, mcp_with_tools, sample_user):
         """Test updating multiple user fields."""
         mcp, client = mcp_with_tools
-        updated_user = {
-            **sample_user,
-            "name": "New Name",
-            "time_zone": "America/New_York"
-        }
+        updated_user = {**sample_user, "name": "New Name", "time_zone": "America/New_York"}
         client.put.return_value = updated_user
 
         tool = mcp._tool_manager._tools.get("update_user")
-        result = await tool.fn(
-            name="New Name",
-            time_zone="America/New_York"
-        )
+        result = await tool.fn(name="New Name", time_zone="America/New_York")
         _result_data = json.loads(result)
 
         client.put.assert_called_once_with(
-            "/users/42",
-            json_data={"name": "New Name", "time_zone": "America/New_York"}
+            "/users/42", json_data={"name": "New Name", "time_zone": "America/New_York"}
         )
 
     @pytest.mark.asyncio

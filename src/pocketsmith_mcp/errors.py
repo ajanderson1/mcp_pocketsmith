@@ -1,7 +1,6 @@
 """Custom exceptions for PocketSmith MCP Server."""
 
 
-
 class PocketSmithError(Exception):
     """Base exception for all PocketSmith MCP errors."""
 
@@ -101,4 +100,6 @@ def validate_id(value: int, field_name: str) -> None:
         ValidationError: If value is not a positive integer.
     """
     if value <= 0:
-        raise ValidationError(f"{field_name} must be a positive integer, got {value}", field=field_name)
+        raise ValidationError(
+            f"{field_name} must be a positive integer, got {value}", field=field_name
+        )

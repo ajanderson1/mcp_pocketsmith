@@ -13,7 +13,9 @@ from pocketsmith_mcp.user_context import UserContext
 logger = get_logger("tools.attachments")
 
 
-def register_attachment_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx: UserContext) -> None:
+def register_attachment_tools(
+    mcp: FastMCP, client: PocketSmithClient, user_ctx: UserContext
+) -> None:
     """Register attachment-related MCP tools."""
 
     def _validate_file_upload(file_name: str, file_data: str) -> None:
@@ -156,11 +158,9 @@ def register_attachment_tools(mcp: FastMCP, client: PocketSmithClient, user_ctx:
         try:
             validate_id(attachment_id, "attachment_id")
             await client.delete(f"/attachments/{attachment_id}")
-            return json.dumps({
-                "deleted": True,
-                "attachment_id": attachment_id,
-                "message": "Attachment deleted"
-            })
+            return json.dumps(
+                {"deleted": True, "attachment_id": attachment_id, "message": "Attachment deleted"}
+            )
         except Exception as e:
             logger.error(f"delete_attachment failed: {e}")
             raise ValueError(f"Failed to delete attachment {attachment_id}: {e}")
