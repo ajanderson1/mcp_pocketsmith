@@ -23,8 +23,12 @@ class UserContext:
 
     @user_id.setter
     def user_id(self, value: int) -> None:
-        if self._user_id != 0:
-            raise RuntimeError("user_id has already been set and cannot be changed.")
         if not isinstance(value, int) or value <= 0:
             raise ValueError(f"user_id must be a positive integer, got {value}")
+        # Idempotent re-set with the same value is allowed: under
+        # streamable-http transport FastMCP re-runs the lifespan per
+        # session, which re-resolves the same authenticated user. Only
+        # a change to a *different* user is rejected.
+        if self._user_id != 0 and self._user_id != value:
+            raise RuntimeError("user_id has already been set and cannot be changed.")
         self._user_id = value

@@ -25,12 +25,20 @@ class TestUserContext:
         ctx = UserContext(user_id=99)
         assert ctx.user_id == 99
 
-    def test_set_once_only(self):
-        """Setting user_id twice should raise RuntimeError."""
+    def test_set_different_value_rejected(self):
+        """Changing user_id to a different value should raise RuntimeError."""
         ctx = UserContext()
         ctx.user_id = 42
         with pytest.raises(RuntimeError, match="user_id has already been set"):
             ctx.user_id = 99
+
+    def test_reset_same_value_is_idempotent(self):
+        """Re-setting user_id to the same value is allowed (streamable-http
+        re-runs the lifespan per session and re-resolves the same user)."""
+        ctx = UserContext()
+        ctx.user_id = 42
+        ctx.user_id = 42  # must not raise
+        assert ctx.user_id == 42
 
     def test_reject_zero_setter(self):
         """Setting user_id to zero should raise ValueError."""
