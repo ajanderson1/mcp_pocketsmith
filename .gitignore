@@ -177,3 +177,6 @@ logs/
 dev/
 PRPs
 docs/superpowers/
+
+# Machine-local Toolkit state
+/skills-lock.json
